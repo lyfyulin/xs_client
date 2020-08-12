@@ -1,0 +1,173 @@
+.lyf-card{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.lyf-card-title{
+    width: 100%;
+    height: 40px;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+}
+.lyf-card-content{
+    width: 100%;
+    height: calc(100% - 40px);
+    display: flex;
+    align-items: center;
+}
+
+
+.full{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+
+.lyf-col-1{
+    width: 10%;
+    height: 100%;
+}
+.lyf-col-2{
+    width: 20%;
+    height: 100%;
+}
+.lyf-col-3{
+    width: 30%;
+    height: 100%;
+}
+.lyf-col-4{
+    width: 40%;
+    height: 100%;
+}
+.lyf-col-5{
+    width: 50%;
+    height: 100%;
+}
+.lyf-col-6{
+    width: 60%;
+    height: 100%;
+}
+.lyf-col-7{
+    width: 70%;
+    height: 100%;
+}
+.lyf-col-8{
+    width: 80%;
+    height: 100%;
+}
+
+.lyf-row-2{
+    width: 100%;
+    height: 20%;
+}
+.lyf-row-3{
+    width: 100%;
+    height: 30%;
+}
+.lyf-row-4{
+    width: 100%;
+    height: 40%;
+}
+.lyf-row-5{
+    width: 100%;
+    height: 50%;
+}
+.lyf-row-6{
+    width: 100%;
+    height: 60%;
+}
+.lyf-row-7{
+    width: 100%;
+    height: 70%;
+}
+.lyf-row-8{
+    width: 100%;
+    height: 80%;
+}
+.lyf-row-9{
+    width: 100%;
+    height: 90%;
+}
+
+
+.lyf-2-3-col{
+    height: 100%;
+    width: 66.66%;
+}
+.lyf-4-col{
+    height: 100%;
+    width: 25%;
+}
+.lyf-3-col{
+    height: 100%;
+    width: 33.33%;
+}
+.lyf-6-col{
+    height: 100%;
+    width: 16.66%;
+}
+
+
+.lyf-2-3-row{
+    width: 100%;
+    height: 66.66%;
+}
+.lyf-4-row{
+    width: 100%;
+    height: 25%;
+}
+.lyf-3-row{
+    width: 100%;
+    height: 33.33%;
+}
+.lyf-6-row{
+    width: 100%;
+    height: 16.66%;
+}
+
+
+.lyf-center{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.lyf-border{
+    border: 1px solid #1380bd;
+    background-color: rgba(15, 47, 72, 0.4);
+}
+
+.lyf-background{
+    background: url(../image/bg.png) no-repeat #061537;
+    background-size: cover;
+}
+
+.lyf-font-1{
+    color: #938059;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.lyf-font-2{
+    color: #643586;
+    font-weight: bold;
+    font-size: larger;
+}
+
+.lyf-font-3{
+    color: #30b4c5;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.lyf-font-4{
+    color: #1790a0;
+    font-weight: bold;
+    font-size: 1.2em;
+}

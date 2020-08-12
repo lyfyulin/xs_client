@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>flex布局</title>
+    <style>
+        html,body{
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .full{
+            height: 100%;
+            width: 100%;
+        }
+        .flex-display{
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-around;
+        }
+        .item{
+            width: 30%;
+            height: 300px;
+            flex-shrink: 0.5;
+        }
+        .item-img{
+            width: 100%;
+            height: 60%;
+        }
+        .item-title{
+            width: 100%;
+            height: 40%;
+        }
+        .phase-img{
+            height: 100%;
+            width: auto;
+        }
+        .lyf-center{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="full flex-display">
+            <div class="item">
+                <div class="item-img lyf-center">
+                    <img src="../src/assets/images/phase-0.png" class="phase-img" />
+                </div>
+                <div class="item-title lyf-center">
+                    phase-0
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-img lyf-center">
+                    <img src="../src/assets/images/phase-0.png" class="phase-img" />
+                </div>
+                <div class="item-title lyf-center">
+                    phase-0
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-img lyf-center">
+                    <img src="../src/assets/images/phase-0.png" class="phase-img" />
+                </div>
+                <div class="item-title lyf-center">
+                    phase-0
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-img lyf-center">
+                    <img src="../src/assets/images/phase-0.png" class="phase-img" />
+                </div>
+                <div class="item-title lyf-center">
+                    phase-0
+                </div>
+            </div>
+    </div>
+</body>
+</html>

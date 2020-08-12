@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>throttle_debounce</title>
+</head>
+<body>
+<button id = "throttle" >测试函数节流</button>
+<button id = "debounce" >测试函数防抖</button>
+<script>
+    console.log(" 节流，  防抖！");
+    
+    function throttleClick(arg) {
+        console.log("函数节流 throttle ：点击事件！");
+    }
+    
+    function debounceClick() {
+        console.log("函数防抖 debounce ：点击事件！");
+    }
+
+    function throttle(fn, delay) {
+        let start = 0           // 保证第一次点击立即调用, 第二次开始就要计算时间差。
+        return function(){
+            const current = Date.now()
+            if( current - start > delay ){
+                fn.apply(this, arguments)
+                start = current
+            }
+        }
+    }
+
+    // 不节流情况   
+    // document.getElementById("throttle").onclick = throttleClick
+    // 节流情况， 1s 响应一次点击
+    document.getElementById("throttle").onclick = throttle( throttleClick, 1000 );
+
+    function debounce( fn, delay ) {
+        return function () {
+            const _self = this
+            const args = arguments
+            if( fn.timeoutId ){
+                clearTimeout( fn.timeoutId )
+            }
+            fn.timeoutId = setTimeout( () => {
+                fn.apply( _self, args )
+                delete fn.timeoutId
+            }, delay )
+            
+        }
+    }
+
+
+    // 不防抖情况
+    document.getElementById("debounce").onclick = debounceClick;
+    // 防抖操作, 最后一次点击后 1 s 才执行
+    document.getElementById("debounce").onclick = debounce( debounceClick, 1000 );
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数组去重</title>
+</head>
+<body>
+<script>
+    
+    let arr = [1,2,3,4,4,52,65,,63,43,4]
+
+    // method 1
+    Array.prototype.unique = function(){
+        let res = []
+        this.forEach( item => {
+            res.indexOf(item) === -1? res.push(item):1
+        } )
+        return res
+    }
+    console.log([1,1,2,2,3,3].unique());
+    
+    // method 2
+    Array.prototype.unique2 = function(){
+        let res = []
+        let obj = {}
+        this.forEach( item => {     
+            // hasOwnProperty 只在对象自身查找属性
+            !obj.hasOwnProperty(item)? obj[item]=true && res.push(item):1
+        } )
+        return res
+    }
+    console.log([1,1,2,2,3,3].unique2());
+
+    // method 3
+    Array.prototype.unique3 = function(){
+        return Array.from(new Set(this))
+    }
+    console.log([1,1,2,2,3,3].unique3());
+
+    // method 4
+    Array.prototype.unique4 = function(){
+        return [...new Set(this)]
+    }
+    console.log([1,1,2,2,3,3].unique4());
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+
+.info{
+    background-color: transparent;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+
+.link-legend{
+    /* background-color: white; */
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-flex;
+    width: 200px;
+    height: 40px;
+    justify-content: center;
+}
+
+.link-legend .link-legend-item{
+    padding: 0;
+    margin: 0;
+    width: 50px;
+    height: 30px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.link-legend-font{
+    height: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    word-break: keep-all;
+    text-align: center;
+    color: #fff;
+    font-size: 0.1rem;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.link-legend-color{
+    height: 10px;
+    width: 100%;
+}

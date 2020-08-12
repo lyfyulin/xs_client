@@ -1,0 +1,26 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>call apply 方法实现</title>
+</head>
+<body>
+<script>
+
+    Function.prototype.call = function ( obj ) {
+        let args = [arguments[1], arguments[2]]
+        obj.fn = this
+        obj.fn(...args)
+        delete obj.fn
+    }
+
+    function fn (a, b) {
+        console.log(a, b, this.m)
+    }
+
+    const obj = { m: 1 }
+    fn.call( obj, 1, 2, 4 )
+
+
+</script>
+</body>
+</html>

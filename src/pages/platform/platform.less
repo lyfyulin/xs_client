@@ -1,0 +1,49 @@
+.platform{
+    height: 100%;
+    width: 100%;
+    background-color: #333;
+    background: url(../../assets/images/bg.png) repeat-x;
+    overflow: hidden;
+    .header {
+        width: 100%;
+        height: 80px;
+        background: url(../../assets/images/header.png) no-repeat;
+        background-size: 100% 100%;
+
+        text-align: center;
+        font-size: 2em;
+        line-height: 80px;
+        color: #fff;
+    }
+    .content{
+        width: 100%;
+        height: calc( 100% - 120px );
+    }
+    .footer {
+        width: 100%;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #bbb;
+    }
+}
+
+// 数据加载动画
+.loading {
+    position: absolute;
+    height: calc( 100% - 120px );
+    width: 100%;
+    text-align: center;
+    background: rgba(31, 55, 161, 0.2);
+    z-index: 100;
+}
+.none {
+    display: none;
+}
+
+// 滑动动画
+
+.animate{
+    transition: all .8s;
+}
