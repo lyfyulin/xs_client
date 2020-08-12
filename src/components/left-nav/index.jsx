@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
-import { Menu, Icon, message } from 'antd'
+import { Menu, Icon, message, Button } from 'antd'
 import { connect } from 'react-redux'
 import { setHeaderTitle } from '../../redux/actions'
 import menuList from '../../config/menuConfig'
@@ -10,16 +10,6 @@ import './index.less'
 const { SubMenu } = Menu
 
 class LeftNav extends Component {
-
-  state = {
-    collapsed: true,
-  }
-
-  toggleCollapsed = () => {
-    this.setState({
-      collapsed: !this.state.collapsed
-    })
-  }
 
   /*
     判断当前用户是否有此权限
@@ -82,15 +72,15 @@ class LeftNav extends Component {
             }
             pre.push((
                 <SubMenu
-                key={item.key}
-                title={
-                    <span>
-                    <Icon type={item.icon} />
-                    <span>{item.title}</span>
-                    </span>
-                }
+                  key={item.key}
+                  title={
+                      <span>
+                      <Icon type={item.icon} />
+                      <span>{item.title}</span>
+                      </span>
+                  }
                 >
-                {this.getMenuNodes(item.children)}
+                  { this.getMenuNodes(item.children) }
                 </SubMenu>
             ))
           }
@@ -117,13 +107,18 @@ class LeftNav extends Component {
   render() {
     let selectKey = '/' + this.props.location.pathname.split('/').slice(1)[0]
     
-    const { collapsed }  = this.state
+    const { collapsed }  = this.props
+
     return (
       <div className="left-nav">
-        <Link className="left-nav-link" to="/home">
+        {
+          this.props.collapsed?<Link className="left-nav-link" to="/home">
             <img src={logo} alt="logo"/>
-            <h1>保山平台</h1>
-        </Link>
+          </Link>:<Link className="left-nav-link" to="/home">
+            <h1>保山数据平台</h1>
+          </Link>
+        }
+        
         <Menu
           selectedKeys={[selectKey]}
           defaultOpenKeys={[this.openKey]}

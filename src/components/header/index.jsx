@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { Modal, Carousel } from 'antd'
+import { Modal, Carousel, Icon, Button } from 'antd'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logout } from '../../redux/actions'
@@ -16,7 +16,7 @@ class Header extends Component {
     state = {
         currentTime: Date.now(),
         dayPictureUrl: '', 
-        weather: ''
+        weather: '',
     }
 
     logout = ( e ) => {
@@ -73,8 +73,12 @@ class Header extends Component {
         return (
             <div className = "header">
                 <div className = "header-top">
-                    {/* 标签体文本以 children 传给子标签 */}
-                    欢迎, { user.username } &nbsp;&nbsp; <LinkButton onClick={this.logout}>退出</LinkButton>
+                    <div className="header-top-left">
+                        <span onClick={ this.props.setCollapsed }><Icon type={ this.props.collapsed? "menu-unfold":"menu-fold" }/></span>
+                    </div>
+                    <div className="header-top-right">
+                        欢迎, { user.username } &nbsp;&nbsp; <LinkButton onClick={this.logout}>退出</LinkButton>
+                    </div>
                 </div>
                 <div className = "header-bottom">
                     <div className = "header-bottom-left">{title}</div>

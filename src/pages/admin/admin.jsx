@@ -26,20 +26,31 @@ const { Content, Footer, Sider } = Layout
 
 class Admin extends Component {
 
+    state = {
+        collapsed: false,
+    }
+
+    setCollapsed = () =>{
+        this.setState({
+            collapsed: !this.state.collapsed
+        })
+    }
+
     render() {
         // 读取保存的user信息，不存在则跳到登录界面
         const user = this.props.user
+        const { collapsed } = this.state
         if(!user.user_id){
             return <Redirect to="/login"/>
         }
         // console.log(this.props.location.pathname);
         return (
             <Layout style={{ height: '100%' }}>
-                <Sider>
-                    <LeftNav/>
+                <Sider collapsible collapsed={ collapsed }>
+                    <LeftNav collapsed={ collapsed }/>
                 </Sider>
                 <Layout>
-                    <Header/>
+                    <Header setCollapsed = { this.setCollapsed } collapsed={ collapsed }/>
                     <Content 
                         id = "content"
                         style={{ height:'calc(100% - 80px)', backgroundColor: '#ccc', padding: 0, margin: 0 }}
