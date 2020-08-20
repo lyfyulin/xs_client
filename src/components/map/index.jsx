@@ -86,7 +86,6 @@ export default class LvqiMap extends Component {
             L.tileLayer(TMS, { maxZoom: 16, minZoom: 9 }).addTo(this.map)
         }
         this.map._onResize()
-        
     }
 
     componentWillReceiveProps = (nextProps) => {

@@ -4,12 +4,12 @@ import L from 'leaflet'
 import { MAP_CENTER, TMS } from '../../utils/xiaoshan'
 import Chart from '../../components/chart'
 
+import './state.less'
 import { GaugeOption3, AreaOption2 } from '../../config/echartOption'
-import './device.less'
 
 const { TabPane } = Tabs
 
-export default class Device extends Component {
+export default class State extends Component {
 
     state = {
         firstRender: true,
@@ -106,9 +106,9 @@ export default class Device extends Component {
 
     render() {
         return (
-            <div className="device">
+            <div className="state">
                 <Tabs defaultActiveKey="1" className="full">
-                    <TabPane tab="设备传输率" key="1" className="col-item">
+                    <TabPane tab="路段状态" key="1" className="col-item">
                         <div className="col-item-left">
                             <Table
                                 rowKey = "index"
@@ -127,12 +127,15 @@ export default class Device extends Component {
                         </div>
                         <div className="col-item-right">
                             <div className="lyf-row-5">
-                                <div style={{ height: 45, paddingLeft: 10, fontSize: 20,display: 'flex', alignItems: 'center' }}>
+                                <div style={{ borderBottom: '1px solid #ccc', height: 45, marginLeft: 10, marginRight: 10, fontSize: 20,display: 'flex', alignItems: 'center' }}>
                                     当前状态
                                 </div>
                                 <div style={{ height: "calc(100% - 45px)", padding: 20 }}>
+                                    <div className="lyf-row-2" style={{ display: 'flex', alignItems: 'center' }}>
+                                        自由流速度：43 km/h
+                                    </div>
                                     <div className="lyf-row-2" style={{ fontSize: 20, display: 'flex', alignItems: 'center' }}>
-                                        识别率：82%
+                                        当前速度：35 km/h
                                     </div>
                                     <div className="lyf-row-6">
                                         <Chart option={ this.state.div31_option }/>
@@ -140,7 +143,7 @@ export default class Device extends Component {
                                 </div>
                             </div>
                             <div className="lyf-row-5">
-                                <div style={{ height: 45, paddingLeft: 10, fontSize: 20, display: 'flex', alignItems: 'center' }}>
+                                <div style={{ borderBottom: '1px solid #ccc', height: 45, marginLeft: 10, marginRight: 10, fontSize: 20, display: 'flex', alignItems: 'center' }}>
                                     历史状态
                                 </div>
                                 <div style={{ height: "calc(100% - 45px)", padding: 20 }}>
@@ -148,7 +151,7 @@ export default class Device extends Component {
                                         日期：<DatePicker size="small"/>
                                     </div>
                                     <div className="lyf-row-2 lyf-center">
-                                        识别率：82%
+                                        平均速度： 32.3 km/h
                                     </div>
                                     <div className="lyf-row-6">
                                         <Chart option={ this.state.div32_option }/>
@@ -157,7 +160,7 @@ export default class Device extends Component {
                             </div>
                         </div>
                     </TabPane>
-                    <TabPane tab="设备识别率" key="2" className="col-item">
+                    <TabPane tab="路口状态" key="2" className="col-item">
                     </TabPane>
                 </Tabs>
             </div>

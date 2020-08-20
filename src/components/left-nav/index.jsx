@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom'
 import { Menu, Icon, message, Button } from 'antd'
 import { connect } from 'react-redux'
 import { setHeaderTitle } from '../../redux/actions'
-import menuList from '../../config/menuConfig'
+import { menuList } from '../../config/menuConfig'
 import logo from '../../assets/images/logo.png'
 import './index.less'
 
@@ -115,7 +115,7 @@ class LeftNav extends Component {
           this.props.collapsed?<Link className="left-nav-link" to="/home">
             <img src={logo} alt="logo"/>
           </Link>:<Link className="left-nav-link" to="/home">
-            <h1>保山数据平台</h1>
+            <h1>{ this.props.title }</h1>
           </Link>
         }
         

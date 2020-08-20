@@ -194,6 +194,88 @@ export const AreaOption = (  x_data = [], y_data = [], tip = "" ) => ({
     ]
 })
 
+
+
+// 面积图  无坐标轴 无标签
+export const AreaOption2 = (  x_data = [], y_data = [], title = "" ) => ({
+    tooltip: {
+        trigger: 'axis',
+        position: function (pt) {
+            return [pt[0], '80%'];
+        },
+        formatter: (e) =>{
+            return title + ':' + e[0].data + ' km/h';
+        },
+        backgroundColor: '#0ff',
+        textStyle:{
+            color: '#000',
+        },
+        zlevel: 100
+    },
+    title: {
+        left: 'center',
+    },
+    grid: {
+        left: '8%',
+        right: '8%',
+        bottom: '10%',
+        top: '10%',
+        containLabel: true
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: x_data,
+        axisLabel:{
+            show: false,
+        },
+        axisTick:{
+            show: false,
+        },
+        axisLine:{
+            show: false,
+        }
+    },
+    yAxis: {
+        type: 'value',
+        boundaryGap: [0, '100%'],
+        axisLabel:{
+            show: false,
+        },
+        axisTick:{
+            show: false,
+        },
+        axisLine:{
+            show: false,
+        },
+        splitLine:{
+            show:false,
+        }
+    },
+    series: [
+        {
+            name: title,
+            type:'line',
+            smooth:true,
+            symbol: 'none',
+            sampling: 'average',
+            itemStyle: {
+                color: 'rgb(255, 70, 131)'
+            },
+            areaStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: 'rgb(255, 158, 68)'
+                }, {
+                    offset: 1,
+                    color: 'rgb(255, 70, 131)'
+                }])
+            },
+            data: y_data
+        }
+    ]
+})
+
 // 日历图
 export const CalendarOption = ( x_data = ["2020-04-10"], y_data = [0] ) => ({
     tooltip : {
@@ -293,9 +375,9 @@ export const CalendarOption2 = ( x_data = ["2020-04-01"], y_data = [0] ) => ({
 })
 
 // 指示器图
-export const GaugeOption = ( data = 0 ) => ({
+export const GaugeOption = ( data = 0, title = "", unit = "km/h" ) => ({
     tooltip: {
-        formatter: '{a} <br/>{b} : {c}km/h'
+        formatter: '{a} <br/>{b} : {c}' + unit
     },
     toolbox: {
         feature: {
@@ -305,28 +387,28 @@ export const GaugeOption = ( data = 0 ) => ({
     },
     series: [
         {
-            name: '速度',
+            name: title,
             type: 'gauge',
-            detail: {formatter: '{value}千米/时'},
-            data: [{value: data, name: '路网平均速度'}]
+            detail: {formatter: '{value}' + unit},
+            data: [{value: data, name: title}]
         }
     ]
 })
 
 // 指示器图2
-export const GaugeOption2 = ( data = 0, color = { color: '#468EFD' } ) => ({
+export const GaugeOption2 = ( data = 0, title = "", unit = "", maxValue = 100, color = { color: '#468EFD' } ) => ({
     // backgroundColor: '#0E1327',
     tooltip:{
         show: true,
         position: "right",
-        formatter: "{a} <br/>{b} : {c}km/h",
-        backgroundColor: '#0ff',
+        formatter: "{a} <br/>{b} : {c}" + unit,
+        backgroundColor: '#5AD8A6',
         textStyle:{
             color: '#000',
         },
     },
     series: [{
-            name: "路网平均速度",
+            name: title,
             title: {
                 show: false,
                 offsetCenter: [0, 46], // x, y，单位px
@@ -339,7 +421,7 @@ export const GaugeOption2 = ( data = 0, color = { color: '#468EFD' } ) => ({
             },
             type: "gauge",
             radius: '40%',
-            max: 60,
+            max: maxValue,
             splitNumber: 10,
             axisLine: {
                 lineStyle: {
@@ -366,7 +448,7 @@ export const GaugeOption2 = ( data = 0, color = { color: '#468EFD' } ) => ({
                 formatter: function(value) {
                     if (value !== 0) {
                         var num = Math.round(value ) ;
-                        return parseInt(num).toFixed(0)+"km/h";
+                        return parseInt(num).toFixed(0)+unit;
                     } else {
                         return 0;
                     }
@@ -380,7 +462,7 @@ export const GaugeOption2 = ( data = 0, color = { color: '#468EFD' } ) => ({
                 }
             },
             data: [{
-                name: "速度",
+                name: title,
                 value: data,
             }],
             pointer: {
@@ -418,18 +500,14 @@ export const GaugeOption2 = ( data = 0, color = { color: '#468EFD' } ) => ({
                     switch (v + '') {
                         case '0':
                             return '0';
-                        case '10':
-                            return '10';
-                        case '20':
-                            return '20';
-                        case '30':
-                            return '30';
-                        case '40':
-                            return '40';
+                        case '25':
+                            return '25';
                         case '50':
                             return '50';
-                        case '60':
-                            return '60';
+                        case '75':
+                            return '75';
+                        case '100':
+                            return '100';
                     }
                 }
             }, //刻度标签。
@@ -460,10 +538,10 @@ export const GaugeOption2 = ( data = 0, color = { color: '#468EFD' } ) => ({
 })
 
 // 指示器图3
-export const GaugeOption3 = ( data = 0, color = { color: '#468EFD' }, name = "路网平均速度" ) => ({
+export const GaugeOption3 = ( data = 0, title = "", unit = "", maxValue = 100, color = { color: '#468EFD' } ) => ({
     // backgroundColor:'#000',
     tooltip: {
-        formatter: "{a} <br/> {c} km/h"
+        formatter: "{a} <br/> {c} " + unit
     },
     grid: {
         // top: 0,
@@ -472,18 +550,17 @@ export const GaugeOption3 = ( data = 0, color = { color: '#468EFD' }, name = "�
         // bottom: 0,
     },
     series: [{
-        name: name,
+        name: title,
         type: "gauge",
         center: ['50%', '70%'],
         radius: '60%',
-        min: 0, //最小刻度
-        max: 60, //最大刻度
+        max: maxValue, //最大刻度
         startAngle: 180,
         endAngle: 0,
         axisLine: {
             lineStyle: {
                 color: [
-                    [data / 60, color.color],
+                    [data / maxValue, color.color],
                     [1, "#111F42"]
                 ],
                 width: 3
@@ -521,7 +598,7 @@ export const GaugeOption3 = ( data = 0, color = { color: '#468EFD' }, name = "�
             }
         },
         data: [{
-            name: name,
+            name: title,
             value: data,
         }],
         pointer: {
@@ -555,24 +632,7 @@ export const GaugeOption3 = ( data = 0, color = { color: '#468EFD' }, name = "�
             color: '#ff0',
             distance: 25,
             fontSize: 15,
-            formatter: function(v) {
-                switch (v + '') {
-                    case '0':
-                        return '0';
-                    case '10':
-                        return '10';
-                    case '20':
-                        return '20';
-                    case '30':
-                        return '30';
-                    case '40':
-                        return '40';
-                    case '50':
-                        return '50';
-                    case '60':
-                        return '60';
-                }
-            }
+
         }, //刻度标签。
         axisTick: {
             show: true,
@@ -1602,7 +1662,9 @@ export const BarOption = ( x_data = [], y_data = [], color = ['#9DC8C8', '#58C9B
         }
     }]
 })
-// 柱状图
+
+
+// 柱状图   柱体颜色随机
 export const BarOption2 = (x_data = [], y_data = [], name = "") => ({
     color: ['#d0570e'],
     grid: {
@@ -1679,6 +1741,89 @@ export const BarOption2 = (x_data = [], y_data = [], name = "") => ({
         }
     ]
 })
+
+
+// 柱状图
+export const BarOption3 = (x_data = [], y_data = [], name = "") => ({
+    // color: ['#d0570e'],
+    grid: {
+        top: '8%',
+        bottom: '8%',
+        left: '6%',
+        right: '6%',
+    },
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    xAxis : [
+        {
+            type : 'category',
+            data : x_data,
+            axisLabel: {
+                textStyle: {
+                    color: '#000'
+                },
+                // rotate:40,
+            },
+            axisTick:{
+                inside:true,
+                lineStyle:{
+                    color:'#000'
+                }
+            },
+            axisLine:{
+                symbol:['none','arrow'],
+                symbolSize:6,
+                lineStyle:{
+                    color:'#000'
+                }
+            },
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value',
+            axisLabel: {
+                textStyle: {
+                    color: '#000'
+                }
+            },
+            axisTick:{
+                inside:true,
+                lineStyle:{
+                    color:'#000'
+                }
+            },
+            axisLine:{
+                symbol:['none','arrow'],
+                symbolSize:6,
+                lineStyle:{
+                    color:'#000'
+                }
+            },
+            splitLine:{
+                show:false,
+            }
+        }
+    ],
+    series : [
+        {
+            name: name,
+            type:'bar',
+            barWidth: '60%',
+            data: y_data,
+            itemStyle:{
+                normal:{
+                    color: '#5b8ff9', //function(d){return "#"+Math.floor(Math.random()*(256*256*256-1)).toString(16);}
+                }
+            }
+        }
+    ]
+})
+
 
 
 // 水平柱状图

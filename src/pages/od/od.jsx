@@ -4,15 +4,16 @@ import L from 'leaflet'
 import { MAP_CENTER, TMS } from '../../utils/xiaoshan'
 import Chart from '../../components/chart'
 
-import { GaugeOption3, AreaOption2 } from '../../config/echartOption'
-import './device.less'
+import './od.less'
+import { GaugeOption3, AreaOption2, BarOption2 } from '../../config/echartOption'
 
 const { TabPane } = Tabs
 
-export default class Device extends Component {
+export default class State extends Component {
 
     state = {
         firstRender: true,
+        displayRight: false,
         div11_data: [],
         div31_option: {},
         div32_option: {},
@@ -38,16 +39,18 @@ export default class Device extends Component {
         this.link_state_columns = [{
             dataIndex: 'index',
             title: '拥堵排名',
-            key: 'index',
             render: index => index < 4?<Tag color="#108ee9">{ index }</Tag>:<Tag color="">{ index }</Tag>
         },{
             dataIndex: 'link_name',
             title: '路段名称',
-            key: 'link_name',
+            render: link_name => <a 
+                onClick ={ () => { this.state.displayRight?this.setState({ displayRight: true }):console.log("右侧窗口已打开，请读数据就好了！") } }
+            >
+                { link_name }
+            </a>
         },{
             dataIndex: 'avg_speed',
             title: '速度',
-            key: 'avg_speed',
         }]
 
         let div11_data = [{
@@ -93,7 +96,7 @@ export default class Device extends Component {
         },]
 
         let div31_option = GaugeOption3(3, "拥堵指数", "km/h", 10)
-        let div32_option = AreaOption2(['1', '2', '3'], [1, 2, 3], '平均速度')
+        let div32_option = BarOption2(['1', '2', '3'], [1, 2, 3], '平均速度')
 
         this.setState({
             div11_data, div31_option, div32_option
@@ -105,10 +108,11 @@ export default class Device extends Component {
     }
 
     render() {
+        const { displayRight } = this.state
         return (
-            <div className="device">
+            <div className="od">
                 <Tabs defaultActiveKey="1" className="full">
-                    <TabPane tab="设备传输率" key="1" className="col-item">
+                    <TabPane tab="发生点" key="1" className="col-item">
                         <div className="col-item-left">
                             <Table
                                 rowKey = "index"
@@ -125,14 +129,17 @@ export default class Device extends Component {
                             </div>
 
                         </div>
-                        <div className="col-item-right">
+                        <div className="col-item-right" style={{ display: displayRight?"block":"none" }}>
                             <div className="lyf-row-5">
                                 <div style={{ height: 45, paddingLeft: 10, fontSize: 20,display: 'flex', alignItems: 'center' }}>
-                                    当前状态
+                                    发生量
                                 </div>
                                 <div style={{ height: "calc(100% - 45px)", padding: 20 }}>
+                                    <div className="lyf-row-2" style={{ display: 'flex', alignItems: 'center' }}>
+                                        自由流速度：43 km/h
+                                    </div>
                                     <div className="lyf-row-2" style={{ fontSize: 20, display: 'flex', alignItems: 'center' }}>
-                                        识别率：82%
+                                        当前速度：35 km/h
                                     </div>
                                     <div className="lyf-row-6">
                                         <Chart option={ this.state.div31_option }/>
@@ -141,14 +148,14 @@ export default class Device extends Component {
                             </div>
                             <div className="lyf-row-5">
                                 <div style={{ height: 45, paddingLeft: 10, fontSize: 20, display: 'flex', alignItems: 'center' }}>
-                                    历史状态
+                                    热门目的地
                                 </div>
                                 <div style={{ height: "calc(100% - 45px)", padding: 20 }}>
                                     <div className="lyf-row-2">
                                         日期：<DatePicker size="small"/>
                                     </div>
                                     <div className="lyf-row-2 lyf-center">
-                                        识别率：82%
+                                        平均速度： 32.3 km/h
                                     </div>
                                     <div className="lyf-row-6">
                                         <Chart option={ this.state.div32_option }/>
@@ -157,7 +164,7 @@ export default class Device extends Component {
                             </div>
                         </div>
                     </TabPane>
-                    <TabPane tab="设备识别率" key="2" className="col-item">
+                    <TabPane tab="吸引点" key="2" className="col-item">
                     </TabPane>
                 </Tabs>
             </div>

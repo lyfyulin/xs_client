@@ -1,51 +1,134 @@
-.home{
-    background-color: pink;
+.home {
     width: 100%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 30px;
-}
-.lvqi-col-3{
-    height: 100%;
-    width: 33.33%;
-    padding: 0;
-    margin: 0;
-    border: 1px solid white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.lvqi-card{
-    width: 100%;
-    height: 80%;
-    padding: 0;
-    margin: 0;
-    display: block;
-    .lvqi-card-title{
-        width: 100%;
-        height: 50%;
-        text-align: center;
-        padding: 30px;
-        p{
-            font-size: 15px;
-        }
-    }
-    .lvqi-card-content{
-        width: 100%;
-        height: 50%;
+    overflow-y: auto;
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
+    .first-row {
+        height: 200px;
+        width: calc(100% - 40px);
+        margin: 20px;
         display: flex;
-        margin-top: 50px;
-        justify-content: center;
-        align-items: center;
-        align-items: center;
-        svg{
-            padding: 20px;
-            width: 50%;
-            height: 80%;
+        justify-content: space-around;
+        .row-item {
+            height: 100%;
+            width: 280px;
+            padding: 10px;
+            // background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            .row-item-title {
+                color: '#888';
+                font-size: 16px;
+                height: 30px;
+            }
+            .row-item-subtitle {
+                color: #000;
+                font-size: 30px;
+                height: 50px;
+                align-items: center;
+            }
+            .row-item-content {
+                display: flex;
+                height: 70px;
+                align-items: center;
+                .row-item-content-ele-tab {
+                    font-size: 14px;
+                    width: 130px;
+                    text-align: center;
+                }
+                .row-item-content-ele {
+                    display: flex;
+                    flex-wrap: nowrap;
+                    height: 35px;
+                    align-items: center;
+                }
+            }
+            .row-item-foot {
+                font-size: 16px;
+                height: 30px;
+                border-top: 1px solid #ccc;
+                align-items: center;
+                .row-item-foot-ele-tab {
+                    width: 130px;
+                    text-align: center;
+                }
+            }
         }
     }
+    .second-row{
+        height: 300px;
+        width: calc(100% - 40px);
+        margin: 20px;
+        display: flex;
+        justify-content: space-around;
+        .col-item-1{
+            width: 750px;
+            // background-color: #fff;
+        }
+        .col-item-2{
+            width: 450px;
+            // background-color: #fff;
+            .col-item-2-title{
+                height: 45px;
+                width: 100%;
+                line-height: 45px;
+                text-align: right;
+                border-bottom: 1px solid #ccc;
+            }
+            .col-item-2-content{
+                height: 255px;
+            }
+        }
+    }
+    .third-row{
+        height: 300px;
+        width: calc(100% - 40px);
+        margin: 20px;
+        display: flex;
+        justify-content: space-around;
+        .col-item-1{
+            width: 600px;
+            // background-color: #fff;
+            .col-item-1-title{
+                height: 45px;
+                width: 100%;
+                line-height: 45px;
+                font-size: 20px;
+                font-weight: bolder;
+                text-align: left;
+                padding-left: 10px;
+                border-bottom: 1px solid #ccc;
+            }
+            .col-item-1-content{
+                height: 255px;
+            }
+        }
+        .col-item-2{
+            width: 600px;
+            // background-color: #fff;
+            .col-item-2-title{
+                height: 45px;
+                width: 100%;
+                line-height: 45px;
+                text-align: left;
+                padding-left: 10px;
+                font-size: 20px;
+                font-weight: bolder;
+                border-bottom: 1px solid #ccc;
+            }
+            .col-item-2-content{
+                height: 255px;
+            }
+        }
+    }
+    .forth-row{
+        height: 300px;
+        width: calc(100% - 40px);
+        margin: 20px;
+    }
 }
+
 
 

@@ -1,4 +1,14 @@
-const menuList = [
+
+
+export const system = {
+    title: "萧山数据平台"
+}
+
+
+
+
+
+export const menuList = [
     {
         title: '首页',
         key: '/home',
@@ -6,24 +16,34 @@ const menuList = [
         public: true,
     },
     {
-        title: '数据平台',
-        key: '/platform',
-        icon: 'desktop'
+        title: '路网运行状态',
+        key: '/state',
+        icon: 'home',
+        public: true,
     },
     {
-        title: '信号控制',
-        key: '/signal',
-        icon: 'fork',
-        children: [{
-            title: '单点控制',
-            key: '/node-signal',
-            icon: 'deployment-unit'
-        },
-        {
-            title: '干线控制',
-            key: '/line',
-            icon: 'line'
-        }]
+        title: '在途车辆数',
+        key: '/vn',
+        icon: 'home',
+        public: true,
+    },
+    {
+        title: '通勤车辆',
+        key: '/tongqin',
+        icon: 'home',
+        public: true,
+    },
+    {
+        title: '机动车出行',
+        key: '/od',
+        icon: 'home',
+        public: true,
+    },
+    {
+        title: '设备质量',
+        key: '/device',
+        icon: 'home',
+        public: true,
     },
     {
         title: '数据检索',
@@ -41,36 +61,6 @@ const menuList = [
         icon: 'book'
     },
     {
-        title: '车辆轨迹',
-        key: '/trajectory',
-        icon: 'car',
-    },
-    {
-        title: '数据管理',
-        key: '/config',
-        icon: 'database',
-        children: [{
-            title: '设备管理',
-            key: '/device',
-            icon: 'video-camera'
-        },
-        {
-            title: '点位管理',
-            key: '/node',
-            icon: 'plus'
-        },
-        {
-            title: '路段管理',
-            key: '/link',
-            icon: 'pause'
-        },
-        {
-            title: '区域管理',
-            key: '/area',
-            icon: 'border'
-        }]
-    },
-    {
         title: '用户管理',
         key: '/user',
         icon: 'user'
@@ -81,5 +71,3 @@ const menuList = [
         icon: 'team'
     },
 ]
-
-export default menuList

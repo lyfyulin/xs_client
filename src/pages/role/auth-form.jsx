@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Input, Tree } from 'antd'
 import PropTypes from 'prop-types'
-import menuList from '../../config/menuConfig'
+import { menuList } from '../../config/menuConfig'
 
 const Item = Form.Item
 

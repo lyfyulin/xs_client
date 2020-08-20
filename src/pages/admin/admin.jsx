@@ -8,19 +8,15 @@ import Header from '../../components/header'
 import Home from '../home/home'
 import Role from '../role/role'
 import User from '../user/user'
-import RoadState from '../charts/roadstate'
-import InterState from '../charts/interstate'
-import AreaState from '../charts/areastate'
-import Link from '../link/link'
 import Accidents from '../accidents/accidents'
-import Area from '../area/area'
-import Device from '../device/device'
 import SearchData from '../search/search-data'
-import Node from '../node/node'
-import Trajectory from '../trajectory/trajectory'
-import NodeSignal from '../node-signal/node-signal'
-import Line from '../line/line'
 import Strategy from '../strategy/strategy'
+import Od from '../od/od'
+import Device from '../device/device'
+import Tongqin from '../tongqin/tongqin'
+import Vn from '../vn/vn'
+import State from '../state/state'
+import { system } from '../../config/menuConfig'
 
 const { Content, Footer, Sider } = Layout
 
@@ -43,35 +39,29 @@ class Admin extends Component {
         if(!user.user_id){
             return <Redirect to="/login"/>
         }
-        // console.log(this.props.location.pathname);
         return (
             <Layout style={{ height: '100%' }}>
                 <Sider collapsible collapsed={ collapsed }>
-                    <LeftNav collapsed={ collapsed }/>
+                    <LeftNav collapsed={ collapsed } title={ system.title }/>
                 </Sider>
                 <Layout>
                     <Header setCollapsed = { this.setCollapsed } collapsed={ collapsed }/>
                     <Content 
                         id = "content"
-                        style={{ height:'calc(100% - 80px)', backgroundColor: '#ccc', padding: 0, margin: 0 }}
+                        style={{ height:'calc(100% - 80px)', padding: 0, margin: 0 }}
                     >
                         <Switch>
                             <Route path="/home" component={ Home }></Route>
-                            <Route path="/strategy" component={ Strategy }></Route>
+                            <Route path="/state" component={ State }></Route>
+                            <Route path="/vn" component={ Vn }></Route>
+                            <Route path="/tongqin" component={ Tongqin }></Route>
+                            <Route path="/device" component={ Device }></Route>
+                            <Route path="/od" component={ Od }></Route>
                             <Route path="/role" component={ Role }></Route>
                             <Route path="/user" component={ User }></Route>
-                            {/* <Route path="/charts/roadstate" component={ RoadState }></Route> */}
-                            {/* <Route path="/charts/interstate" component={ InterState }></Route> */}
-                            {/* <Route path="/charts/areastate" component={ AreaState }></Route> */}
-                            <Route path="/node" component={ Node }></Route>
-                            <Route path="/link" component={ Link }></Route>
-                            <Route path="/device" component={ Device }></Route>
                             <Route path="/search" component={ SearchData }></Route>
-                            <Route path="/node-signal" component={ NodeSignal }></Route>
-                            <Route path="/line" component={ Line }></Route>
                             <Route path="/accidents" component={ Accidents }></Route>
-                            <Route path="/area" component={ Area }></Route>
-                            <Route path="/trajectory" component={ Trajectory }></Route>
+                            <Route path="/strategy" component={ Strategy }></Route>
                             <Redirect to="/home" />
                         </Switch>
                     </Content>

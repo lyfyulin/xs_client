@@ -25,38 +25,6 @@ export const reqWeather = (location) => {
     })
 }
 
-export const reqCategories = () => ajax(base + "/product")
-export const reqAddCategory = (name) => ajax.post( base + "/insert/product", { name } )
-export const reqUpdateCategory = ({id, name}) => ajax.post( base + "/update/product", { id, name } )
-
-export const reqGoods = (pageNum, pageSize) => ajax( base + `/good/${pageNum}`, {
-    params: {       // 包含请求参数的对象
-        pageSize
-    }
-} )
-
-export const reqSearchGoods = ({ pageNum, pageSize, searchName, searchType}) => ajax( base + "/good/search", {
-    params: {
-        pageNum,
-        pageSize,
-        searchType,
-        searchName,   // productName 或 productDescs
-    }
-})
-
-
-export const reqUpdateStatus = ( goodsId, status ) => ajax.post( base + "/update/good", JSON.stringify({ id : goodsId, status: status,}), {
-    headers: {
-        "Content-Type": 'application/json'
-    },
-})
-
-export const reqCategory = (categoryId) => ajax( base + "/product/info", {
-    params: {
-        id: categoryId
-    }
-} )
-
 export const reqDeleteImage = ( image_name ) => ajax.post( base + '/delete/image', { image_name } )
 
 export const reqAddUpdateProduct = (product) => ajax.post(
