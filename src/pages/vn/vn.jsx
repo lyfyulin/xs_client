@@ -33,24 +33,24 @@ export default class Vn extends Component {
 
         let div22_data = [{
             index: 1,
-            link_name: "市心路(道源路-人民路)",
-            avg_speed: 32.31,
+            link_name: "道源路-人民路",
+            avg_speed: 3231,
         }, {
             index: 2,
-            link_name: "晨晖路(市心路-高桥路)",
-            avg_speed: 32.32,
+            link_name: "市心路-高桥路",
+            avg_speed: 3232,
         }, {
             index: 3,
-            link_name: "永晖路(建设一路-建设四路)",
-            avg_speed: 32.32,
+            link_name: "建设一路-建设四路",
+            avg_speed: 3232,
         }, {
             index: 4,
-            link_name: "振宁路(金鸡路-博奥路)",
-            avg_speed: 32.32,
+            link_name: "金鸡路-博奥路",
+            avg_speed: 3232,
         }, {
             index: 5,
-            link_name: "金鸡路(飞虹路-振宁路)",
-            avg_speed: 32.32,
+            link_name: "飞虹路-振宁路",
+            avg_speed: 3232,
         }]
 
         let div21_option = BarOption3(["1", "2", "3"], [1, 2, 3], "路网运行速度")
@@ -103,6 +103,15 @@ export default class Vn extends Component {
                             <div className="lyf-col-5">
                                 <Select defaultValue="0">
                                     <Select.Option value="0">请选择</Select.Option>
+                                    <Select.Option value="1">全区在途车辆数</Select.Option>
+                                    <Select.Option value="2">全区外地车</Select.Option>
+                                    <Select.Option value="3">全区本地车</Select.Option>
+                                    <Select.Option value="4">全区大货车</Select.Option>
+                                    <Select.Option value="5">全区小客车</Select.Option>
+                                    <Select.Option value="6">全区工程车</Select.Option>
+                                    <Select.Option value="7">限行区在途车辆数</Select.Option>
+                                    <Select.Option value="8">限行区外地车</Select.Option>
+                                    <Select.Option value="9">限行区绿牌车</Select.Option>
                                 </Select>
                             </div>
                             <div className="lyf-col-5">
@@ -117,10 +126,10 @@ export default class Vn extends Component {
                 <div className="lyf-row-5 second-row">
                     <div className="lyf-col-5" className="col-item-1">
                         <Tabs defaultActiveKey="1">
-                            <TabPane tab="路段状态" key="1" style={{height: 255}}>
+                            <TabPane tab="货车点位" key="1" style={{height: 255}}>
                                 <Chart option={ this.state.div21_option }/>
                             </TabPane>
-                            <TabPane tab="路口状态" key="2" style={{height: 255}}>
+                            <TabPane tab="工程车点位" key="2" style={{height: 255}}>
                                 <Chart option={ this.state.div21_option }/>
                             </TabPane>
                         </Tabs>

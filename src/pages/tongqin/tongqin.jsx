@@ -92,8 +92,8 @@ export default class Tongqin extends Component {
             avg_speed: 35,
         },]
 
-        let div31_option = GaugeOption3(3, "拥堵指数", "km/h", 10)
-        let div32_option = AreaOption2(['1', '2', '3'], [1, 2, 3], '平均速度')
+        let div31_option = AreaOption2(['1', '2', '3'], [1, 2, 3], '通勤车辆数')
+        let div32_option = AreaOption2(['1', '2', '3'], [1, 2, 3], '历史车辆数')
 
         this.setState({
             div11_data, div31_option, div32_option
@@ -128,14 +128,11 @@ export default class Tongqin extends Component {
                         <div className="col-item-right">
                             <div className="lyf-row-5">
                                 <div style={{ height: 45, paddingLeft: 10, fontSize: 20,display: 'flex', alignItems: 'center' }}>
-                                    当前状态
+                                    路段车辆数
                                 </div>
                                 <div style={{ height: "calc(100% - 45px)", padding: 20 }}>
                                     <div className="lyf-row-2" style={{ display: 'flex', alignItems: 'center' }}>
-                                        自由流速度：43 km/h
-                                    </div>
-                                    <div className="lyf-row-2" style={{ fontSize: 20, display: 'flex', alignItems: 'center' }}>
-                                        当前速度：35 km/h
+                                        通勤车辆数：2,143 辆
                                     </div>
                                     <div className="lyf-row-6">
                                         <Chart option={ this.state.div31_option }/>
@@ -144,14 +141,11 @@ export default class Tongqin extends Component {
                             </div>
                             <div className="lyf-row-5">
                                 <div style={{ height: 45, paddingLeft: 10, fontSize: 20, display: 'flex', alignItems: 'center' }}>
-                                    历史状态
+                                    历史车辆数
                                 </div>
                                 <div style={{ height: "calc(100% - 45px)", padding: 20 }}>
                                     <div className="lyf-row-2">
                                         日期：<DatePicker size="small"/>
-                                    </div>
-                                    <div className="lyf-row-2 lyf-center">
-                                        平均速度： 32.3 km/h
                                     </div>
                                     <div className="lyf-row-6">
                                         <Chart option={ this.state.div32_option }/>
