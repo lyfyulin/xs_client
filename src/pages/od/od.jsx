@@ -6,6 +6,7 @@ import Chart from '../../components/chart'
 
 import './od.less'
 import { GaugeOption3, AreaOption2, BarOption2 } from '../../config/echartOption'
+import { od_o_top, od_node_trip } from '../../utils/mock_data/od_data'
 
 const { TabPane } = Tabs
 
@@ -17,6 +18,60 @@ export default class State extends Component {
         div11_data: [],
         div31_option: {},
         div32_option: {},
+    }
+
+    initOdTrips = () => {
+
+        let line_layer = new L.LayerGroup();
+        let line2_layer = new L.LayerGroup();
+        let pt_layer = new L.LayerGroup();
+    
+        let colors = ["#87cc26", "#87cc26", "#edee20", "#edee20", "#f58522", "#f58522"];
+        let line_colors = ["#87cc26", "#87cc26", "#edee20", "#edee20", "#f58522", "#f58522"];
+    
+        od_node_trip.forEach((e,i) => {
+            if(e[0] === e[3]){
+                // let pt1 = bd09togcj02(e[2], e[1]);
+                let pt1 = [parseFloat(e[2]), parseFloat(e[1])]
+    
+                let pt = L.circle(pt1, {
+                    color: colors[Math.round(e[6]/8000)],
+                    opacity: 1,
+                    fillColor: colors[Math.round(e[6]/8000)],
+                    fillOpacity: 1,
+                    radius: e[6]/50,
+                }).addTo(pt_layer).bindPopup(e[0] + '至' + e[3] + '，出行量：' + e[6])
+
+            }else{
+                if(Math.round(e[6]/364)>3){
+                    let pt1 = [parseFloat(e[2]), parseFloat(e[1])]
+                    let pt2 = [parseFloat(e[5]), parseFloat(e[4])]
+    
+                    let line = L.polyline([pt1, pt2], {
+                        stroke: true,
+                        color: line_colors[Math.round(e[6]/364)],
+                        opacity: 1,
+                        lineCap: "butt",
+                        weight: e[6]/100,
+                    }).addTo(line2_layer).bindPopup(e[0] + '至' + e[3] + '，出行量：' + e[6])
+
+                }else{
+                    let pt1 = [parseFloat(e[2]), parseFloat(e[1])]
+                    let pt2 = [parseFloat(e[5]), parseFloat(e[4])]
+    
+                    let line = L.polyline([pt1, pt2], {
+                        stroke: true,
+                        color: line_colors[Math.round(e[6]/364)],
+                        opacity: 1,
+                        weight: e[6]/100,
+                    }).addTo(line_layer).bindPopup(e[0] + '至' + e[3] + '，出行量：' + e[6])
+                }
+            }
+        })
+        line_layer.addTo(this.map);
+    
+        line2_layer.addTo(this.map);
+        pt_layer.addTo(this.map);
     }
     
     initMap = async() => {
@@ -31,6 +86,8 @@ export default class State extends Component {
                 attributionControl: false, 
             })
             L.tileLayer(TMS, { maxZoom: 16, minZoom: 9 }).addTo(this.map)
+
+            this.initOdTrips()
         }
         // this.map._onResize()
     }
@@ -38,7 +95,7 @@ export default class State extends Component {
     componentWillMount() {
         this.link_state_columns = [{
             dataIndex: 'index',
-            title: '拥堵排名',
+            title: '出行排名',
             render: index => index < 4?<Tag color="#108ee9">{ index }</Tag>:<Tag color="">{ index }</Tag>
         },{
             dataIndex: 'link_name',
@@ -49,51 +106,11 @@ export default class State extends Component {
                 { link_name }
             </a>
         },{
-            dataIndex: 'avg_speed',
-            title: '速度',
+            dataIndex: 'o_cnts',
+            title: '发生量',
         }]
 
-        let div11_data = [{
-            index: 1,
-            link_name: '路段1',
-            avg_speed: 35,
-        },{
-            index: 2,
-            link_name: '路段1',
-            avg_speed: 35,
-        },{
-            index: 3,
-            link_name: '路段1',
-            avg_speed: 35,
-        },{
-            index: 4,
-            link_name: '路段1',
-            avg_speed: 35,
-        },{
-            index: 5,
-            link_name: '路段1',
-            avg_speed: 35,
-        },{
-            index: 6,
-            link_name: '路段1',
-            avg_speed: 35,
-        },{
-            index: 7,
-            link_name: '路段1',
-            avg_speed: 35,
-        },{
-            index: 8,
-            link_name: '路段1',
-            avg_speed: 35,
-        },{
-            index: 9,
-            link_name: '路段1',
-            avg_speed: 35,
-        },{
-            index: 10,
-            link_name: '路段1',
-            avg_speed: 35,
-        },]
+        let div11_data = od_o_top.map( ( e, i ) => ({ index: (i + 1), link_name: e[0], o_cnts: e[1] }) )
 
         let div31_option = GaugeOption3(3, "拥堵指数", "km/h", 10)
         let div32_option = BarOption2(['1', '2', '3'], [1, 2, 3], '平均速度')

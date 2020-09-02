@@ -6,6 +6,7 @@ import Chart from '../../components/chart'
 
 import { GaugeOption3, AreaOption2 } from '../../config/echartOption'
 import './device.less'
+import { dev_rcg_rate_top, last_day_dev_quality, search_dev_quality } from '../../utils/mock_data/dev_data'
 
 const { TabPane } = Tabs
 
@@ -16,6 +17,15 @@ export default class Device extends Component {
         div11_data: [],
         div31_option: {},
         div32_option: {},
+    }
+
+    initDevice = () => {
+        
+        for(let i = 0; i < last_day_dev_quality.length; i++){
+            let dt = last_day_dev_quality[i]
+            let pt = L.circle([parseFloat(dt[7]), parseFloat(dt[6])], { color: ['#f00', '#0f0'][parseFloat(dt[4])<0.1?0:1] })
+            pt.addTo(this.map)
+        }
     }
     
     initMap = async() => {
@@ -30,70 +40,31 @@ export default class Device extends Component {
                 attributionControl: false, 
             })
             L.tileLayer(TMS, { maxZoom: 16, minZoom: 9 }).addTo(this.map)
+            this.initDevice()
         }
         // this.map._onResize()
     }
 
     componentWillMount() {
-        this.link_state_columns = [{
+        this.dev_rcg_rate_columns = [{
             dataIndex: 'index',
-            title: '拥堵排名',
+            title: '质量排名',
             key: 'index',
             render: index => index < 4?<Tag color="#108ee9">{ index }</Tag>:<Tag color="">{ index }</Tag>
         },{
-            dataIndex: 'link_name',
-            title: '路段名称',
-            key: 'link_name',
+            dataIndex: 'dev_name',
+            title: '设备名称',
+            key: 'dev_name',
         },{
-            dataIndex: 'avg_speed',
+            dataIndex: 'rcg_rate',
             title: '速度',
-            key: 'avg_speed',
+            key: 'rcg_rate',
         }]
 
-        let div11_data = [{
-            index: 1,
-            link_name: '路段1',
-            avg_speed: 35,
-        },{
-            index: 2,
-            link_name: '路段1',
-            avg_speed: 35,
-        },{
-            index: 3,
-            link_name: '路段1',
-            avg_speed: 35,
-        },{
-            index: 4,
-            link_name: '路段1',
-            avg_speed: 35,
-        },{
-            index: 5,
-            link_name: '路段1',
-            avg_speed: 35,
-        },{
-            index: 6,
-            link_name: '路段1',
-            avg_speed: 35,
-        },{
-            index: 7,
-            link_name: '路段1',
-            avg_speed: 35,
-        },{
-            index: 8,
-            link_name: '路段1',
-            avg_speed: 35,
-        },{
-            index: 9,
-            link_name: '路段1',
-            avg_speed: 35,
-        },{
-            index: 10,
-            link_name: '路段1',
-            avg_speed: 35,
-        },]
+        let div11_data = dev_rcg_rate_top.map( (e, i) => ({ index: (i + 1), dev_name: e[0], rcg_rate:e[3]*100+'%' }) )
 
-        let div31_option = GaugeOption3(3, "拥堵指数", "km/h", 10)
-        let div32_option = AreaOption2(['1', '2', '3'], [1, 2, 3], '平均速度')
+        let div31_option = GaugeOption3(3, "拥堵指数", "%", 10)
+        let div32_option = AreaOption2([], search_dev_quality, '')
 
         this.setState({
             div11_data, div31_option, div32_option
@@ -115,7 +86,7 @@ export default class Device extends Component {
                                 showHeader = { false }
                                 pagination = { false }
                                 dataSource = { this.state.div11_data }
-                                columns = { this.link_state_columns }
+                                columns = { this.dev_rcg_rate_columns }
                             />
 
                         </div>
@@ -128,7 +99,7 @@ export default class Device extends Component {
                         <div className="col-item-right">
                             <div className="lyf-row-5">
                                 <div style={{ height: 45, paddingLeft: 10, fontSize: 20,display: 'flex', alignItems: 'center' }}>
-                                    当前状态
+                                    设备状态
                                 </div>
                                 <div style={{ height: "calc(100% - 45px)", padding: 20 }}>
                                     <div className="lyf-row-2" style={{ fontSize: 20, display: 'flex', alignItems: 'center' }}>

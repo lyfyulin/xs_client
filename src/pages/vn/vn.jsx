@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Icon, DatePicker, Select, Tabs, Table } from 'antd'
 import Chart from '../../components/chart'
 import { AreaOption2, BarOption3 } from '../../config/echartOption'
-
+import { current_urban_total_vn, today_urban_vn, today_ban_vn, foreign_truck_node } from '../../utils/mock_data/vn_data'
 import './vn.less'
 
 const { TabPane } = Tabs
@@ -10,56 +10,67 @@ const { TabPane } = Tabs
 export default class Vn extends Component {
 
     state = {
+        vn_id: 1,
         div12_option: {},
         div21_option: {},
         div22_data: [],
     }
 
+    get_vn = (vn_id) => {
+        switch(vn_id){
+            case 1:
+                return AreaOption2([], today_urban_vn.map( e => e[0] ), "核心区在途车辆数")
+                break
+            case 2:
+                return AreaOption2([], today_urban_vn.map( e => e[1] ), "核心区外地车")
+                break
+            case 3:
+                return AreaOption2([], today_urban_vn.map( e => e[2] ), "核心区本地车")
+                break
+            case 4:
+                return AreaOption2([], today_urban_vn.map( e => e[3] ), "核心区大车")
+                break
+            case 5:
+                return AreaOption2([], today_urban_vn.map( e => e[4] ), "核心区小车")
+                break
+            case 6:
+                    return AreaOption2([], today_urban_vn.map( e => e[5] ), "核心区工程车")
+                    break
+            case 7:
+                    return AreaOption2([], today_ban_vn.map( e => e[0] ), "区外流出")
+                    break
+            case 8:
+                    return AreaOption2([], today_ban_vn.map( e => e[1] ), "限行区本地车")
+                    break
+            default:
+                return AreaOption2([], today_urban_vn.map( e => e[1] ), "限行区绿牌")
+        }
+    }
 
     componentWillMount() {
-        let div12_option = AreaOption2(['1', '2', '3'], [1,2,3], "")
+        let div12_option = AreaOption2([], [1,2,3], "")
 
-        this.cong_link_columns = [{
-            dataIndex: 'link_name',
-            title: '路段名',
-            key: 'link_name',
+        this.foreign_node_columns = [{
+            dataIndex: 'device_name',
+            title: '边缘点位',
+            key: 'device_name',
             width: 300,
         },{
-            dataIndex: 'avg_speed',
+            dataIndex: 'total_vn',
             title: '速度',
-            key: 'avg_speed',
+            key: 'total_vn',
             width: 100,
         }]
 
-        let div22_data = [{
-            index: 1,
-            link_name: "道源路-人民路",
-            avg_speed: 3231,
-        }, {
-            index: 2,
-            link_name: "市心路-高桥路",
-            avg_speed: 3232,
-        }, {
-            index: 3,
-            link_name: "建设一路-建设四路",
-            avg_speed: 3232,
-        }, {
-            index: 4,
-            link_name: "金鸡路-博奥路",
-            avg_speed: 3232,
-        }, {
-            index: 5,
-            link_name: "飞虹路-振宁路",
-            avg_speed: 3232,
-        }]
+        let div22_data = foreign_truck_node.slice(0, 5).map( (e, i) => ({ index: (i+1), ...e }))
 
-        let div21_option = BarOption3(["1", "2", "3"], [1, 2, 3], "路网运行速度")
+
+        let div21_option = BarOption3(foreign_truck_node.map( e => e.device_name ), foreign_truck_node.map( e => e.total_vn ), "点位外地货车")
 
 
         this.setState({ div12_option, div21_option, div22_data })
     }
     
-
     render() {
         return (
             <div className="vn">
@@ -101,7 +112,7 @@ export default class Vn extends Component {
                     <div className="lyf-col-7 col-item-2">
                         <div className="lyf-row-2" style={{ display: 'flex', flexWrap: 'nowrap' }}>
                             <div className="lyf-col-5">
-                                <Select defaultValue="0">
+                                <Select defaultValue="1" onChange = {(value) => { this.setState({ vn_id: value }) }} >
                                     <Select.Option value="0">请选择</Select.Option>
                                     <Select.Option value="1">全区在途车辆数</Select.Option>
                                     <Select.Option value="2">全区外地车</Select.Option>
@@ -119,7 +130,7 @@ export default class Vn extends Component {
                             </div>
                         </div>
                         <div className="lyf-row-8">
-                            <Chart option = { this.state.div12_option }/>
+                            <Chart option = { this.get_vn(this.state.vn_id) }/>
                         </div>
                     </div>
                 </div>
@@ -127,9 +138,6 @@ export default class Vn extends Component {
                     <div className="lyf-col-5" className="col-item-1">
                         <Tabs defaultActiveKey="1">
                             <TabPane tab="货车点位" key="1" style={{height: 255}}>
-                                <Chart option={ this.state.div21_option }/>
-                            </TabPane>
-                            <TabPane tab="工程车点位" key="2" style={{height: 255}}>
                                 <Chart option={ this.state.div21_option }/>
                             </TabPane>
                         </Tabs>
@@ -142,7 +150,7 @@ export default class Vn extends Component {
                             <Table 
                                 rowKey = "index"
                                 showHeader = { false }
-                                columns = { this.cong_link_columns }
+                                columns = { this.foreign_node_columns }
                                 dataSource = { this.state.div22_data }
                                 pagination = { false }
                             />

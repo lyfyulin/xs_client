@@ -203,8 +203,8 @@ export const AreaOption2 = (  x_data = [], y_data = [], title = "" ) => ({
         position: function (pt) {
             return [pt[0], '80%'];
         },
-        formatter: (e) =>{
-            return title + ':' + e[0].data + ' km/h';
+        formatter: (e) => {
+            return '时间：' + e[0].axisValue + '<br/>' + title + ':' + e[0].data + ' km/h';
         },
         backgroundColor: '#0ff',
         textStyle:{
@@ -1008,6 +1008,164 @@ export const GaugeOption5 = ( data1 = 0, data2 = 0, data3 = 0 ) => {
     }
 }
 
+// 指示器6
+export const GaugeOption6 = (data = 0, maxValue = 10) => ({
+    series: [{
+            name: '刻度',
+            type: 'gauge',
+            radius: '80%',
+            min: 0,
+            max: 10,
+            splitNumber: 2, //刻度数量
+            startAngle: 180,
+            endAngle: 0,
+            axisLine: {
+                show: false,
+                lineStyle: {
+                    width: 1,
+                    color: [
+                        [1, 'rgba(0,0,0,0)']
+                    ]
+                }
+            }, //仪表盘轴线
+            axisLabel: {
+                show: false,
+            }, //刻度标签。
+            axisTick: {
+                show: false,
+                lineStyle: {
+                    color: {
+                        type: 'radial',
+                        colorStops: [{
+                                offset: 0,
+                                color: '#77C664'
+                            },
+
+                            {
+                                offset: 0.2,
+                                color: '#2CB7C7'
+                            },
+
+                            {
+                                offset: 0.4,
+                                color: '#1DB2DD'
+                            },
+
+                            {
+                                offset: 0.6,
+                                color: '#2D89ED'
+                            },
+
+                            {
+                                offset: 0.8,
+                                color: '#7765B4'
+                            },
+
+                            {
+                                offset: 1,
+                                color: '#EB3457'
+                            }
+                        ],
+                        globalCoord: false // 缺省为 false
+                    },
+                    width: 2,
+                    length: 20,
+                },
+                length: -5
+            }, //刻度样式
+            splitLine: {
+                show: false,
+                length: -5,
+            }, //分隔线样式
+            detail: {
+                show: false
+            },
+            pointer: {
+                show: false
+            }
+        },
+        {
+            type: 'gauge',
+            z:0,
+            radius: '85%',
+            min: 0,
+            max: 100,
+            center: ['50%', '65%'],
+            splitNumber: 0, //刻度数量
+            startAngle: 180,
+            endAngle: 0,
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    width: 300,
+                    color: [
+                        [1,
+                            new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                                {
+                                    offset: 0,
+                                    color: '#77C664'
+                                },
+
+                                {
+                                    offset: 0.2,
+                                    color: '#2CB7C7'
+                                },
+
+                                {
+                                    offset: 0.4,
+                                    color: '#1DB2DD'
+                                },
+
+                                {
+                                    offset: 0.6,
+                                    color: '#2D89ED'
+                                },
+
+                                {
+                                    offset: 0.8,
+                                    color: '#7765B4'
+                                },
+
+                                {
+                                    offset: 1,
+                                    color: '#EB3457'
+                                }
+                            ])
+                        ]
+                    ],
+                }
+            },
+            //分隔线样式。
+            splitLine: {
+                show: false,
+            },
+            axisLabel: {
+                show: false
+            },
+            axisTick: {
+                show: false
+            },
+            //仪表盘详情，用于显示数据。
+            detail: {
+                show: true,
+                offsetCenter: [0, 30],
+                color: '#ddd',
+                formatter: function(params) {
+                    return params.toFixed(2) + "";	//显示内容
+                },
+                textStyle: {
+                    color:'#fff',
+                    fontSize:20,
+                }
+            },
+            data: [{
+                name: "",
+                value: data,
+            }]
+        }
+    ]
+})
+
 // 折线图
 export const LineOption = ( x_data = [], y_data = [] ) => ({
     grid: {
@@ -1077,6 +1235,88 @@ export const LineOption = ( x_data = [], y_data = [] ) => ({
         }
     }]
 })
+
+// 折线图2
+export const LineOption2 = (x_data = [], y_data = [], name = "") => ({
+    // color: ['#d0570e'],
+    grid: {
+        top: '8%',
+        bottom: '8%',
+        left: '6%',
+        right: '6%',
+    },
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    xAxis : [
+        {
+            type : 'category',
+            data : x_data,
+            axisLabel: {
+                textStyle: {
+                    color: '#000'
+                },
+                // rotate:40,
+            },
+            axisTick:{
+                inside:true,
+                lineStyle:{
+                    color:'#000'
+                }
+            },
+            axisLine:{
+                symbol:['none','arrow'],
+                symbolSize:6,
+                lineStyle:{
+                    color:'#000'
+                }
+            },
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value',
+            axisLabel: {
+                textStyle: {
+                    color: '#000'
+                }
+            },
+            axisTick:{
+                inside:true,
+                lineStyle:{
+                    color:'#000'
+                }
+            },
+            axisLine:{
+                symbol:['none','arrow'],
+                symbolSize:6,
+                lineStyle:{
+                    color:'#000'
+                }
+            },
+            splitLine:{
+                show:false,
+            }
+        }
+    ],
+    series : [
+        {
+            name: name,
+            type:'line',
+            barWidth: '60%',
+            data: y_data,
+            itemStyle:{
+                normal:{
+                    color: '#5b8ff9', //function(d){return "#"+Math.floor(Math.random()*(256*256*256-1)).toString(16);}
+                }
+            }
+        }
+    ]
+})
+
 
 // 双折线图
 export const BiLineOption = (x_data = [], y_data1 = [], y_data2 = [], color = 1) => ({

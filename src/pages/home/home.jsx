@@ -1,33 +1,46 @@
 import React, { Component } from 'react'
 import { Icon, Tabs, DatePicker, Table  } from 'antd'
 import Chart from '../../components/chart'
-import { AreaOption2, BarOption3, GaugeOption2 } from '../../config/echartOption'
-import './home.less'
+import { AreaOption2, LineOption2, GaugeOption2 } from '../../config/echartOption'
+import { current_cong, current_rdnet, today_rdnet, current_whole_vn, last_devs_rcg_rate, current_road_state_top,
+    search_road_state, tongqin_hot_road_top, tongqin_hot_node_top, od_trip_dist, od_trip_freq, od_trip_time, 
+    od_avg_trip_dist, od_avg_trip_freq, od_avg_trip_time 
+} from '../../utils/mock_data/home_data'
 
+import { time_point, link_data, node_data, dev_data } from '../../utils/mock_data/origin_data'
+
+import './home.less'
 
 const { TabPane } = Tabs
 
 export default class Home extends Component {
 
     state = {
+        current_cong, current_rdnet, today_rdnet, current_whole_vn, last_devs_rcg_rate, current_road_state_top,
+        search_road_state, tongqin_hot_road_top, tongqin_hot_node_top, od_trip_dist, od_trip_freq, od_trip_time, 
+        od_avg_trip_dist, od_avg_trip_freq, od_avg_trip_time,
         div11_option: {},
         div21_option: {},
         div22_data: [],
         div31_data: [],
         div32_option: {},
+        div33_option: {},
+        div41_option: {}, 
+        div42_option: {}, 
+        div43_option: {},
     }
 
     load_data = () => {
         // 拥堵路段
-        let cong_speed = 28.6
-        let cong_lastweek_speed = 27.6
-        let cong_lastyear_speed = 25.8
-        let cong_state_index = 2.8
+        let cong_speed = current_cong.cong_speed
+        let cong_last_week_speed = current_cong.last_week
+        let cong_last_year_speed = current_cong.last_year
+        let cong_state_index = current_cong.state_index
 
         // 路网状态
-        let rdnet_speed = 28.4
-        let rdnet_lastweek_speed = 29.2
-        let rdnet_today_speed = []
+        let rdnet_speed = current_rdnet.rdnet_speed
+        let rdnet_last_week_speed = current_rdnet.last_week
+        let rdnet_today_speed = today_rdnet
 
         // 在途车辆数
         let total_vn = 28423
@@ -57,8 +70,9 @@ export default class Home extends Component {
     }
 
     componentWillMount() {
-        this.cong_link_columns = [{
-            dataIndex: 'link_name',
+
+        this.road_columns = [{
+            dataIndex: 'road_name',
             title: '路段名',
             key: 'link_name',
             width: 300,
@@ -75,68 +89,45 @@ export default class Home extends Component {
             key: 'link_name',
             width: 300,
         },{
-            dataIndex: 'tongqin_vn',
+            dataIndex: 'flow',
             title: '通勤量',
-            key: 'tongqin_vn',
+            key: 'flow',
             width: 100,
         }]
 
+        let div11_option = AreaOption2(time_point.slice(0, today_rdnet.length - 1), today_rdnet, "路网运行速度" )
 
-        let div11_option = AreaOption2(["1", "2", "3"], [1, 2, 3], "路网运行速度" )
-        let div22_data = [{
-            index: 1,
-            link_name: "市心路(道源路-人民路)",
-            avg_speed: 32.31,
-        }, {
-            index: 2,
-            link_name: "晨晖路(市心路-高桥路)",
-            avg_speed: 32.32,
-        }, {
-            index: 3,
-            link_name: "永晖路(建设一路-建设四路)",
-            avg_speed: 32.32,
-        }, {
-            index: 4,
-            link_name: "振宁路(金鸡路-博奥路)",
-            avg_speed: 32.32,
-        }, {
-            index: 5,
-            link_name: "金鸡路(飞虹路-振宁路)",
-            avg_speed: 32.32,
-        }]
+        let div22_data = current_road_state_top.slice(0, 5).map( (e, i) => ({ index: (i + 1), ...e }) )
 
-        let div31_data = [{
-            index: 1,
-            link_name: "振宁路",
-            tongqin_vn: 32.31,
-        }, {
-            index: 2,
-            link_name: "金鸡路",
-            tongqin_vn: 32.32,
-        }, {
-            index: 3,
-            link_name: "建设一路",
-            tongqin_vn: 32.32,
-        }, {
-            index: 4,
-            link_name: "博奥路",
-            tongqin_vn: 32.32,
-        }, {
-            index: 5,
-            link_name: "潘水路",
-            tongqin_vn: 32.32,
-        }]
+        
 
-        let div21_option = BarOption3(["1", "2", "3"], [1, 2, 3], "路网运行速度")
+        let div31_data = tongqin_hot_road_top.slice(0, 5).map( (e, i) => ({ index: (i + 1), ...e }) )
 
-        let div32_option = GaugeOption2(78, "设备识别率", "%")
+        
+        let div21_option = LineOption2(time_point.slice(0, search_road_state.length - 1), search_road_state, "路网运行速度")
+
+        let div32_option = GaugeOption2(91.01, "设备识别率", "%")
+
+        let div33_option = GaugeOption2(91.23, "设备传输率", "%")
+
+        let div41_option = LineOption2(od_trip_time.map( e => e[0] ), od_trip_time.map( e => e[1] ), "")
+        let div42_option = LineOption2(od_trip_dist.map( e => e[0] ), od_trip_dist.map( e => e[1] ), "")
+        let div43_option = LineOption2(od_trip_freq.map( e => e[0] ), od_trip_freq.map( e => e[1] ), "")
         
         this.setState({
-            div11_option, div22_data, div31_data, div21_option, div32_option
+            div11_option, div22_data, div31_data, div21_option, div32_option, div33_option,
+            div41_option, div42_option, div43_option
         })
+        
     }
 
     render() {
+
+        let {
+            current_cong, current_rdnet, today_rdnet, current_whole_vn, last_devs_rcg_rate, current_road_state_top,
+            search_road_state, tongqin_hot_road_top, tongqin_hot_node_top, od_trip_dist, od_trip_freq, od_trip_time, 
+            od_avg_trip_dist, od_avg_trip_freq, od_avg_trip_time
+        } = this.state
 
         return (
             <div className="home">
@@ -146,18 +137,18 @@ export default class Home extends Component {
                             拥堵路段状态
                         </div>
                         <div className="row-item-subtitle">
-                            28.6 km/h
+                            { current_cong.cong_speed } km/h
                         </div>
                         <div className="row-item-content">
                             <div className="row-item-content-ele-tab">
-                                周同比 <Icon style={{ color: '#f00' }} type="caret-up"/>  12%
+                                周同比 <Icon style={{ color: '#f00' }} type="caret-up"/>  1.3%
                             </div>
                             <div className="row-item-content-ele-tab">
-                                年环比 <Icon style={{ color: '#0f0' }} type="caret-down"/>  11%
+                                年环比 <Icon style={{ color: '#0f0' }} type="caret-down"/>  2.1%
                             </div>
                         </div>
                         <div className="row-item-foot">
-                            拥堵指数 2.8
+                            拥堵指数 { current_cong.state_index }
                         </div>
                     </div>
                     <div className="row-item">
@@ -165,7 +156,7 @@ export default class Home extends Component {
                             路网平均速度
                         </div>
                         <div className="row-item-subtitle">
-                            28.4 km/h
+                            { current_rdnet.rdnet_speed } km/h
                         </div>
                         <div className="row-item-content">
                             <div className="full">
@@ -173,7 +164,7 @@ export default class Home extends Component {
                             </div>
                         </div>
                         <div className="row-item-foot">
-                            上周同期 28.42 km/h
+                            上周同期 { current_rdnet.last_week } km/h
                         </div>
                     </div>
                     <div className="row-item">
@@ -181,28 +172,28 @@ export default class Home extends Component {
                             在途车辆数
                         </div>
                         <div className="row-item-subtitle">
-                            28,423 辆
+                            { current_whole_vn.total_vn } 辆
                         </div>
                         <div className="row-item-content" style={{ flexWrap:'wrap' }}>
                             <div className="row-item-content-ele">
                                 <div className="row-item-content-ele-tab">
-                                    大型车 <Icon style={{ color: '#f00' }} type="caret-up"/>  3,854
+                                    大型车 <Icon style={{ color: '#f00' }} type="caret-up"/>  { current_whole_vn.truck_vn }
                                 </div>
                                 <div className="row-item-content-ele-tab">
-                                    小客车 <Icon style={{ color: '#0f0' }} type="caret-down"/>  24,569
+                                    小客车 <Icon style={{ color: '#0f0' }} type="caret-down"/>  { current_whole_vn.car_vn }
                                 </div>
                             </div>
                             <div className="row-item-content-ele">
                                 <div className="row-item-content-ele-tab">
-                                    浙A <Icon style={{ color: '#0f0' }} type="caret-down"/>  26,560
+                                    浙A <Icon style={{ color: '#0f0' }} type="caret-down"/>  { current_whole_vn.local_vn }
                                 </div>
                                 <div className="row-item-content-ele-tab">
-                                    非浙A <Icon style={{ color: '#0f0' }} type="caret-down"/>  1,863
+                                    非浙A <Icon style={{ color: '#0f0' }} type="caret-down"/>  { current_whole_vn.foreign_vn }
                                 </div>
                             </div>
                         </div>
                         <div className="row-item-foot">
-                            上周同期 
+                            上周同期 { current_whole_vn.last_week }
                         </div>
                     </div>
                     <div className="row-item">
@@ -210,17 +201,17 @@ export default class Home extends Component {
                             设备识别率
                         </div>
                         <div className="row-item-subtitle">
-                            78%
+                            { last_devs_rcg_rate.last_day * 100 + '%' }
                         </div>
                         <div className="row-item-content">
 
                         </div>
                         <div className="row-item-foot" style={{ display: 'flex', flexWrap: 'nowrap' }}>
                             <div className="row-item-foot-ele-tab">
-                                周同比 <Icon style={{ color: '#f00' }} type="caret-up"/>  12%
+                                周同比 <Icon style={{ color: '#f00' }} type="caret-down"/>  4%
                             </div>
                             <div className="row-item-foot-ele-tab">
-                                年环比 <Icon style={{ color: '#0f0' }} type="caret-down"/>  11%
+                                年环比 <Icon style={{ color: '#f00' }} type="caret-down"/>  3%
                             </div>
                         </div>
                     </div>
@@ -230,9 +221,6 @@ export default class Home extends Component {
                     <div className="lyf-col-5" className="col-item-1">
                         <Tabs defaultActiveKey="1">
                             <TabPane tab="路段状态" key="1" style={{height: 255}}>
-                                <Chart option={ this.state.div21_option }/>
-                            </TabPane>
-                            <TabPane tab="路口状态" key="2" style={{height: 255}}>
                                 <Chart option={ this.state.div21_option }/>
                             </TabPane>
                         </Tabs>
@@ -245,7 +233,7 @@ export default class Home extends Component {
                             <Table 
                                 rowKey = "index"
                                 showHeader = { false }
-                                columns = { this.cong_link_columns }
+                                columns = { this.road_columns }
                                 dataSource = { this.state.div22_data }
                                 pagination = { false }
                             />
@@ -287,7 +275,7 @@ export default class Home extends Component {
                                     设备传输率
                                 </div>
                                 <div className="lyf-row-8">
-                                    <Chart option={ this.state.div32_option }/>
+                                    <Chart option={ this.state.div33_option }/>
                                 </div>
                             </div>
                         </div>
@@ -297,25 +285,25 @@ export default class Home extends Component {
                 <div className="forth-row">
                     <Tabs defaultActiveKey="1">
                         <TabPane 
-                            tab={<div><div style={{ height: 30 }}>出行时长</div><div style={{ textAlign: 'left', fontSize: 30 }}>16.2分钟</div></div>} 
+                            tab={<div><div style={{ height: 30 }}>出行时长</div><div style={{ textAlign: 'left', fontSize: 30 }}>{ od_avg_trip_time }分钟</div></div>} 
                             key="1" 
                             style={{ height: 200 }}
                         >
-                            <Chart option={ this.state.div11_option }/>
+                            <Chart option={ this.state.div41_option }/>
                         </TabPane>
                         <TabPane 
-                            tab={<div><div style={{ height: 30 }}>出行距离</div><div style={{ textAlign: 'left', fontSize: 30 }}>5 km</div></div>} 
+                            tab={<div><div style={{ height: 30 }}>出行距离</div><div style={{ textAlign: 'left', fontSize: 30 }}>{ od_avg_trip_dist } km</div></div>} 
                             key="2" 
                             style={{ height: 200 }}
                         >
-                            <Chart option={ this.state.div11_option }/>
+                            <Chart option={ this.state.div42_option }/>
                         </TabPane>
                         <TabPane 
-                            tab={<div><div style={{ height: 30 }}>出行次数</div><div style={{ textAlign: 'left', fontSize: 30 }}>1 次</div></div>} 
+                            tab={<div><div style={{ height: 30 }}>出行次数</div><div style={{ textAlign: 'left', fontSize: 30 }}>{ od_avg_trip_freq } 次</div></div>} 
                             key="3" 
                             style={{ height: 200 }}
                         >
-                            <Chart option={ this.state.div11_option }/>
+                            <Chart option={ this.state.div43_option }/>
                         </TabPane>
                     </Tabs>
                 </div>

@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { Tabs, Table, Tag, DatePicker } from 'antd'
 import L from 'leaflet'
-import { MAP_CENTER, TMS } from '../../utils/xiaoshan'
+import { MAP_CENTER, TMS, LINK_INFO2 } from '../../utils/xiaoshan'
 import Chart from '../../components/chart'
+import { tongqin_link_flow, tongqin_flow_hour } from '../../utils/mock_data/tongqin_data'
 
 import { GaugeOption3, AreaOption2 } from '../../config/echartOption'
 import './tongqin.less'
+import { tongqin_hot_road_top } from '../../utils/mock_data/home_data'
 
 const { TabPane } = Tabs
 
@@ -18,6 +20,13 @@ export default class Tongqin extends Component {
         div32_option: {},
     }
     
+    initTongqin = () => {
+        for(let i = 0; i < LINK_INFO2.length; i++){
+            let line = L.polyline(LINK_INFO2[i], {color: '#0ff', opacity:parseInt(tongqin_link_flow[i][1] / 1200) })
+            line.addTo(this.map)
+        }
+    }
+
     initMap = async() => {
         let { firstRender } = this.state
 
@@ -30,14 +39,16 @@ export default class Tongqin extends Component {
                 attributionControl: false, 
             })
             L.tileLayer(TMS, { maxZoom: 16, minZoom: 9 }).addTo(this.map)
+
+            this.initTongqin()
         }
         // this.map._onResize()
     }
 
     componentWillMount() {
-        this.link_state_columns = [{
+        this.tongqin_hotroad_columns = [{
             dataIndex: 'index',
-            title: '拥堵排名',
+            title: '热点路段',
             key: 'index',
             render: index => index < 4?<Tag color="#108ee9">{ index }</Tag>:<Tag color="">{ index }</Tag>
         },{
@@ -45,55 +56,16 @@ export default class Tongqin extends Component {
             title: '路段名称',
             key: 'link_name',
         },{
-            dataIndex: 'avg_speed',
-            title: '速度',
-            key: 'avg_speed',
+            dataIndex: 'flow',
+            title: '流量',
+            key: 'flow',
         }]
 
-        let div11_data = [{
-            index: 1,
-            link_name: '路段1',
-            avg_speed: 35,
-        },{
-            index: 2,
-            link_name: '路段1',
-            avg_speed: 35,
-        },{
-            index: 3,
-            link_name: '路段1',
-            avg_speed: 35,
-        },{
-            index: 4,
-            link_name: '路段1',
-            avg_speed: 35,
-        },{
-            index: 5,
-            link_name: '路段1',
-            avg_speed: 35,
-        },{
-            index: 6,
-            link_name: '路段1',
-            avg_speed: 35,
-        },{
-            index: 7,
-            link_name: '路段1',
-            avg_speed: 35,
-        },{
-            index: 8,
-            link_name: '路段1',
-            avg_speed: 35,
-        },{
-            index: 9,
-            link_name: '路段1',
-            avg_speed: 35,
-        },{
-            index: 10,
-            link_name: '路段1',
-            avg_speed: 35,
-        },]
+        let div11_data = tongqin_hot_road_top.map( (e, i) => ({ index: (i + 1), ...e }) )
 
-        let div31_option = AreaOption2(['1', '2', '3'], [1, 2, 3], '通勤车辆数')
-        let div32_option = AreaOption2(['1', '2', '3'], [1, 2, 3], '历史车辆数')
+
+        let div31_option = AreaOption2([], tongqin_flow_hour, '通勤车辆数')
+        let div32_option = AreaOption2([], tongqin_flow_hour, '历史车辆数')
 
         this.setState({
             div11_data, div31_option, div32_option
@@ -115,7 +87,7 @@ export default class Tongqin extends Component {
                                 showHeader = { false }
                                 pagination = { false }
                                 dataSource = { this.state.div11_data }
-                                columns = { this.link_state_columns }
+                                columns = { this.tongqin_hotroad_columns }
                             />
 
                         </div>

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import L from 'leaflet'
 import '../../utils/leaflet/LeafletLegend'
 import PropTypes from 'prop-types'
-import { LINK_INFO, LINK_COLOR, INTER_INFO, TMS, MAP_CENTER, FIX_TMS } from '../../utils/baoshan'
+import { LINK_COLOR, LINK_INFO, INTER_INFO, TMS, MAP_CENTER, FIX_TMS } from '../../utils/xiaoshan'
 import { bd09togcj02 } from '../../utils/lnglatUtils'
 
 export default class LvqiMap extends Component {
