@@ -134,7 +134,7 @@ export default class Home extends Component {
                 <div className="first-row">
                     <div className="row-item">
                         <div className="row-item-title">
-                            拥堵路段状态
+                            拥堵路段状态  
                         </div>
                         <div className="row-item-subtitle">
                             { current_cong.cong_speed } km/h
@@ -153,7 +153,7 @@ export default class Home extends Component {
                     </div>
                     <div className="row-item">
                     <div className="row-item-title">
-                            路网平均速度
+                            路网平均速度   <a href="http://localhost:3005/download/report/daily?start_date=2020-08-06%2000:00:00&end_date=2020-08-07%2000:00:00">日报</a>
                         </div>
                         <div className="row-item-subtitle">
                             { current_rdnet.rdnet_speed } km/h

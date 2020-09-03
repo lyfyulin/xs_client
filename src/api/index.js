@@ -8,6 +8,7 @@ import { message } from 'antd'
 // const base = 'http://192.122.1.246:3005'     // 视频专网ip
 const base = 'http://localhost:3005'         // 本地ip
 export const reqLogin = (username, password) => ajax.post( base + "/login_verify", {username, password} )
+// export const reqLogin = (username, password) => ({ code: 1, message: "success", data:{ user_id: 1, username: 'admin', password: 'admin', role_id: 1, name: 'admin', info: '警官', phone: '无', menu: '/home;/state' } })
 
 // jsonp 只能解决 GET 类型的 ajax 请求跨域问题
 // jsonp 请求不是 ajax 请求，而是一般的 get 请求 
@@ -26,22 +27,6 @@ export const reqWeather = (location) => {
 }
 
 export const reqDeleteImage = ( image_name ) => ajax.post( base + '/delete/image', { image_name } )
-
-export const reqAddUpdateProduct = (product) => ajax.post(
-     base + (product.id?'/update/good':'/insert/good'),
-     JSON.stringify(product),
-     {
-        headers: {
-            "Content-Type": 'application/json'
-        },
-     }
-)
-
-export const reqProductById = ( goodId ) => ajax( base + "/good/info", {
-    params: {
-        id: goodId
-    }
-} )
 
 
 // user
