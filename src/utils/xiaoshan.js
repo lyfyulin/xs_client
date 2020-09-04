@@ -1,7 +1,7 @@
 
 
 // map
-export const MAP_CENTER = [30.12, 120.175]
+export const MAP_CENTER = [30.192, 120.215]
 export const TMS = "http://map.geoq.cn/ArcGIS/rest/services/ChinaOnlineStreetPurplishBlue/MapServer/tile/{z}/{y}/{x}"
 export const FIX_TMS = "http://192.122.2.196:8080/fix_map/bg.png"
 //"http://www.google.cn/maps/vt?lyrs=m@189&gl=cn&x={x}&y={y}&z={z}"
@@ -1850,6 +1850,8 @@ export const ACCIDENT_PATTERN = ['碰撞运动车辆','碰撞静止车辆','其�
 export const ACCIDENT_TYPE = ['机动车追尾机动车','机动车追尾停驶车辆','机动车同向刮擦','机动车对向刮擦','机动车违反车道行驶发生碰撞','机动车正面碰撞','机动车直角碰撞','机动车撞非机动车','机动车撞行人','机动车撞固定物','机动车侧翻','多车事故','非机动车撞固定物','非机动车撞非机动车','非机动车撞行人','非机动车撞停驶车辆','非机动车单车事故']
 export const LIGHT_CONDITION = ['灯光无影响','灯光干扰','灯光过暗']
 export const SIGN_MARKING_CONDITION = ['标志标线完整清晰','标志标线不一致', '标线残缺模糊', '标志提醒缺失']
+
+export const MORE_POINT_STATUS = ['未治理', '治理中', '治理中(无明显效果)', '已治理(有效)']
 
 // accident-party
 export const TRIP_MODE = ['小客车', '非机动车', '自行车', '行人', '大货车', '大客车', '小货车']

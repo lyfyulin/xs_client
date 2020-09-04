@@ -1317,6 +1317,88 @@ export const LineOption2 = (x_data = [], y_data = [], name = "") => ({
     ]
 })
 
+// 折线图
+export const LineOption3 = (x_data = [], y_data = [], name = "") => ({
+    // color: ['#d0570e'],
+    grid: {
+        top: '8%',
+        bottom: '8%',
+        left: '6%',
+        right: '6%',
+    },
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    xAxis : [
+        {
+            type : 'category',
+            data : x_data,
+            axisLabel: {
+                textStyle: {
+                    color: '#000'
+                },
+                // rotate:40,
+            },
+            axisTick:{
+                inside:true,
+                lineStyle:{
+                    color:'#000'
+                }
+            },
+            axisLine:{
+                symbol:['none','arrow'],
+                symbolSize:6,
+                lineStyle:{
+                    color:'#000'
+                }
+            },
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value',
+            axisLabel: {
+                textStyle: {
+                    color: '#000'
+                }
+            },
+            axisTick:{
+                inside:true,
+                lineStyle:{
+                    color:'#000'
+                }
+            },
+            axisLine:{
+                symbol:['none','arrow'],
+                symbolSize:6,
+                lineStyle:{
+                    color:'#000'
+                }
+            },
+            splitLine:{
+                show:false,
+            }
+        }
+    ],
+    series : [
+        {
+            name: name,
+            type:'line',
+            barWidth: '60%',
+            data: y_data,
+            itemStyle:{
+                normal:{
+                    color: '#5b8ff9', //function(d){return "#"+Math.floor(Math.random()*(256*256*256-1)).toString(16);}
+                }
+            }
+        }
+    ]
+})
+
+
 
 // 双折线图
 export const BiLineOption = (x_data = [], y_data1 = [], y_data2 = [], color = 1) => ({
@@ -2640,7 +2722,29 @@ export const PieOption = ( x_data = [], y_data = [], colorList = ['#47A2FF ', '#
     ]
 })
 
+
 // 
+export const PieOption2 = (x_data = [], y_data = []) => ({
+    tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    series : [{
+        name: '',
+        type: 'pie',
+        radius : '55%',
+        center: ['50%', '60%'],
+        data: y_data.map( (e, i) => ({ name: x_data[i], value: y_data[i] }) ),
+        itemStyle: {
+            emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+        }
+    }]
+})
+
 
 // 坐标热力图
 export const HeatmapOption = (x_data, y_data, data, names) => {

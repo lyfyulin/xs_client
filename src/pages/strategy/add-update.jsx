@@ -33,6 +33,7 @@ class StrategyAddUpdate extends Component {
         this.editorRef = React.createRef()
     }
     
+    /*
 
     load_users = async () => {
         const result = await reqUsers()
@@ -46,6 +47,7 @@ class StrategyAddUpdate extends Component {
             }
         }
     }
+    */
 
     validatePrice = ( rule, value, callback ) => {
         const res = parseInt( value.trim(), 10 )
@@ -92,7 +94,7 @@ class StrategyAddUpdate extends Component {
     componentDidMount() {
         const { strategy } = this.state
         this.isUpdate = !!strategy.strategy_id
-        this.load_users()
+        // this.load_users()
     }
 
 

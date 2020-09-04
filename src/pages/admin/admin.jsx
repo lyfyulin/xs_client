@@ -17,6 +17,7 @@ import Tongqin from '../tongqin/tongqin'
 import Vn from '../vn/vn'
 import State from '../state/state'
 import { system } from '../../config/menuConfig'
+import AccidentsDetail from '../accidents/accidents-detail'
 
 const { Content, Footer, Sider } = Layout
 
@@ -61,6 +62,7 @@ class Admin extends Component {
                             <Route path="/user" component={ User }></Route>
                             <Route path="/search" component={ SearchData }></Route>
                             <Route path="/accidents" component={ Accidents }></Route>
+                            <Route path="/accidents-detail" component={ AccidentsDetail }></Route>
                             <Route path="/strategy" component={ Strategy }></Route>
                             <Redirect to="/home" />
                         </Switch>

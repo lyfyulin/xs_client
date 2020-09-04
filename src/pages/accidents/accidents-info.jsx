@@ -6,11 +6,12 @@ import 'moment/locale/zh-cn'
 import L from 'leaflet'
 import heatlayer from '../../utils/leaflet/heatlayer'
 import LinkButton from '../../components/link-button'
-import { MAP_CENTER, TMS } from '../../utils/baoshan'
+import { MAP_CENTER, TMS } from '../../utils/xiaoshan'
 import { reqAccidents, reqDeleteAccident, reqAccidentsSearch } from '../../api'
 import memoryUtils from '../../utils/memoryUtils'
 import _ from 'lodash'
 import { getTodayDateTimeString, getNowDateTimeString, getTimeString, getDateTimeString } from '../../utils/dateUtils'
+import { accident_list } from '../../utils/mock_data/accidents_data'
 
 const Item = Form.Item
 const Option = Select.Option
@@ -97,7 +98,7 @@ class AccidentsInfo extends Component {
     initMap = () => {
         this.map = L.map('map', {
             center: MAP_CENTER,
-            zoom: 14,
+            zoom: 12,
             zoomControl: false,
             attributionControl: false,
         })
@@ -144,6 +145,8 @@ class AccidentsInfo extends Component {
     // 加载事故数据
     loadAccidents = async () => {
         this.setState({ loading: true })
+        this.setHeat(accident_list)
+        /*
         const result = await reqAccidents()
         if(result.code === 1){
             this.setHeat(result.data)
@@ -152,13 +155,14 @@ class AccidentsInfo extends Component {
             message.error(result.message)
             this.setState({ loading: false })
         }
+        */
     }
 
     // 设置事故热力图
     setHeat = (accidents) => {
         accidents.forEach( accident => {
-            let lng_lat = accident.accident_lng_lat
-            this.heat.addLatLng([parseFloat(lng_lat.split(',')[1]), parseFloat(lng_lat.split(',')[0])])
+            let lng_lat = accident_list
+            this.heat.addLatLng([accident[2], accident[1], 2])
         })
         this.heat.addTo(this.map)
 
@@ -438,9 +442,6 @@ class AccidentsInfo extends Component {
                         </div>
                         <div className="lyf-col-1 lyf-center" style={{ textAlign:"center" }}>
                             <Button size="small" htmlType="submit" >查询事故</Button>
-                        </div>
-                        <div className="lyf-col-1 lyf-center" style={{ textAlign:"center" }}>
-                            <Button size="small" onClick={ () => this.props.history.push("/accidents/add") }>添加事故</Button>
                         </div>
                         <div className="lyf-col-1 lyf-center" style={{ textAlign:"center" }}>
                             <Button size="small" onClick={ () => this.props.history.push("/accidents/eliminate") }>隐患点整治</Button>

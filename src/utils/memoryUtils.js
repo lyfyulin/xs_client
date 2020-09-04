@@ -11,7 +11,6 @@ export default {
     area: {},
     line: {},
     device: {},
-    node_schema: {},
     strategy: {},
 }
 

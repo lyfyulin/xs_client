@@ -12,7 +12,7 @@ import { reqStrategies, reqUsers, reqDeleteStrategy } from '../../api'
 import LinkButton from '../../components/link-button'
 import memoryUtils from '../../utils/memoryUtils'
 import { throttle } from 'lodash'
-import { STRATEGY_TYPE } from '../../utils/baoshan'
+import { STRATEGY_TYPE } from '../../utils/xiaoshan'
 
 export default class StrategyHome extends Component {
 
@@ -32,11 +32,6 @@ export default class StrategyHome extends Component {
                 title: '策略内容',
                 dataIndex: 'strategy_content',
                 render: strategy_content => strategy_content.length>20?(strategy_content.replace("<p>", "").replace("</p>", "").slice(0, 20) + "..."):strategy_content.replace("<p>", "").replace("</p>", "")
-            },
-            {
-                title: '用户',
-                dataIndex: 'user_id',
-                render: user_id => this.state.users[user_id]
             },
             {
                 title: '策略类型',
@@ -82,25 +77,17 @@ export default class StrategyHome extends Component {
     load_strategies = async () => {
         let result = await reqStrategies()
         if( result.code === 1 ){
+
+            console.log(result.data);
+            
+
             this.setState({
                 strategies: result.data,
             })
         }
     }
 
-    load_users = async () => {
-        const result = await reqUsers()
-        if( result.code === 1 ){
-            let users = {}
-            result.data.forEach( e => {
-                users[e.user_id] = e.username
-            })
-            this.setState({ users })
-        }
-    }
-
     componentDidMount() {
-        this.load_users()
         this.initColumns()
         this.load_strategies()
     }

@@ -1,7 +1,7 @@
 
 
 export const system = {
-    title: "萧山数据平台"
+    title: "萧山态势平台"
 }
 
 
@@ -53,6 +53,11 @@ export const menuList = [
     {
         title: '事故分析',
         key: '/accidents',
+        icon: 'bell'
+    },
+    {
+        title: '事故统计',
+        key: '/accidents-detail',
         icon: 'bell'
     },
     {
